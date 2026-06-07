@@ -7,13 +7,14 @@ const SENSITIVE_PATTERNS: Record<string, string[]> = {
   medicalAdvice: ['建议你', '你应该', '必须', '不要吃', '一定要']
 };
 
-export function checkSensitiveContent(content: string): SensitiveResult {
+export function checkSensitiveContent(content: string, title?: string): SensitiveResult {
   const flags: string[] = [];
   const matchedWords: string[] = [];
+  const fullContent = title ? `${title} ${content}` : content;
 
   Object.entries(SENSITIVE_PATTERNS).forEach(([type, patterns]) => {
     patterns.forEach(pattern => {
-      if (content.toLowerCase().includes(pattern.toLowerCase())) {
+      if (fullContent.toLowerCase().includes(pattern.toLowerCase())) {
         if (!flags.includes(type)) {
           flags.push(type);
         }
@@ -36,6 +37,15 @@ export function highlightSensitiveContent(content: string, matchedWords: string[
   matchedWords.forEach(word => {
     const regex = new RegExp(`(${word})`, 'gi');
     result = result.replace(regex, '<mark class="bg-red-100 text-red-700 px-0.5 rounded">$1</mark>');
+  });
+  return result;
+}
+
+export function maskSensitiveContent(content: string, matchedWords: string[]): string {
+  let result = content;
+  matchedWords.forEach(word => {
+    const regex = new RegExp(word, 'gi');
+    result = result.replace(regex, '***');
   });
   return result;
 }

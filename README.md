@@ -1,57 +1,178 @@
-# React + TypeScript + Vite
+# 同路人 - 病友互助经验社区
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+一个温暖的病友互助经验分享社区，让同路人不再孤单。用户可以按疾病阶段、用药体验、复诊城市三个维度分享真实生活经验，版主负责整理高质量内容形成入门指南。
 
-Currently, two official plugins are available:
+> ⚠️ **重要免责声明**：本平台所有内容仅供病友经验交流，不构成任何医疗建议。如有健康问题，请及时咨询专业医生。
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## ✨ 核心功能
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 1. 经验分享
+- **三个维度标签**：疾病阶段（初诊/治疗中/康复期）、用药体验、复诊城市
+- **富文本内容**：支持多段落详细描述
+- **实时敏感检测**：自动识别处方、剂量、个人隐私、医疗建议四类敏感内容
+- **人工审核流程**：敏感内容自动进入待审核状态，需版主审核通过后发布
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+### 2. 入门指南
+- **版主整理**：版主可将多篇高质量经验整理成结构化入门指南
+- **保留原作者署名**：每篇经验都保留原作者信息，尊重原创
+- **章节自定义**：版主可为每篇经验设置章节标题，调整排序
+- **目录导航**：指南详情页提供侧边目录，快速跳转
+
+### 3. 社区互动
+- **点赞评论**：支持对经验进行点赞和评论
+- **评论审核**：评论内容同样经过敏感内容检测
+- **筛选浏览**：按疾病阶段、用药体验、复诊城市多维度筛选
+- **热门推荐**：首页展示热门经验和最新发布
+
+### 4. 角色权限
+| 功能 | 普通用户 | 版主 |
+|------|---------|------|
+| 发布经验 | ✅ | ✅ |
+| 浏览已发布经验 | ✅ | ✅ |
+| 点赞评论 | ✅ | ✅ |
+| 查看待审核内容 | ❌ | ✅ |
+| 审核通过/驳回 | ❌ | ✅ |
+| 创建入门指南 | ❌ | ✅ |
+| 将经验加入指南 | ❌ | ✅ |
+
+---
+
+## 🛠️ 技术栈
+
+| 类别 | 技术选型 | 说明 |
+|------|---------|------|
+| 前端框架 | React 18 + TypeScript | 类型安全，组件化开发 |
+| 构建工具 | Vite 5 | 极速开发体验 |
+| 样式方案 | TailwindCSS 3 | 原子化CSS，高效开发 |
+| 路由管理 | React Router DOM 7 | 声明式路由 |
+| 状态管理 | Zustand 5 | 轻量级状态管理，性能优秀 |
+| UI 图标 | Lucide React | 简洁一致的图标库 |
+| 字体 | LXGW WenKai | 霞鹜文楷，温暖人文风格 |
+
+---
+
+## 🚀 快速开始
+
+### 环境要求
+- Node.js >= 18
+- npm 或 pnpm
+
+### 安装依赖
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  extends: [
-    // other configs...
-    // Enable lint rules for React
-    reactX.configs['recommended-typescript'],
-    // Enable lint rules for React DOM
-    reactDom.configs.recommended,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+### 启动开发服务器
+```bash
+npm run dev
 ```
+
+### 构建生产版本
+```bash
+npm run build
+```
+
+### 本地预览构建结果
+```bash
+npm run preview
+```
+
+### 代码检查
+```bash
+npm run lint
+```
+
+---
+
+## 📁 项目结构
+
+```
+src/
+├── components/          # 公共组件
+│   ├── Navbar.tsx      # 顶部导航栏（含用户切换）
+│   ├── Disclaimer.tsx  # 免责声明组件（三种变体）
+│   ├── Modal.tsx       # 通用弹窗组件
+│   ├── CommentSection.tsx  # 评论区组件
+│   └── ExperienceCard.tsx  # 经验卡片组件
+├── pages/              # 页面组件
+│   ├── Home.tsx        # 首页
+│   ├── Publish.tsx     # 经验发布页
+│   ├── ExperienceDetail.tsx  # 经验详情页
+│   ├── Guides.tsx      # 指南列表页
+│   ├── GuideDetail.tsx # 指南详情页
+│   ├── CreateGuide.tsx # 创建指南页（版主专属）
+│   └── ReviewCenter.tsx # 审核中心（版主专属）
+├── store/              # 状态管理
+│   └── useContentStore.ts  # Zustand store
+├── types/              # TypeScript 类型定义
+│   └── index.ts
+├── utils/              # 工具函数
+│   ├── sensitiveCheck.ts   # 敏感内容检测
+│   └── categoryMap.ts      # 分类映射
+├── App.tsx             # 应用入口
+├── main.tsx            # 渲染入口
+└── index.css           # 全局样式
+```
+
+---
+
+## 🎯 功能说明
+
+### 身份切换
+点击右上角头像可以在普通用户和版主之间切换：
+- **普通用户（u1）**：默认角色，体验完整的用户流程
+- **版主（u2）**：拥有审核权限和指南创建权限
+
+### 敏感内容检测
+系统自动检测以下四类敏感内容：
+1. **处方信息**：具体药品名称、处方编号等
+2. **剂量信息**：具体用药剂量、服用频率等
+3. **个人隐私**：真实姓名、联系方式、地址等
+4. **医疗建议**："建议你吃XX药"、"应该去XX医院"等
+
+> 标题和正文都会被同时检测，确保审核口径一致。
+
+### 创建入门指南（版主）
+1. 切换到版主身份
+2. 点击导航栏的「创建指南」
+3. 填写指南基本信息（标题、描述、封面）
+4. 从右侧列表选择高质量经验加入指南
+5. 调整章节标题和排序
+6. 点击「发布指南」完成创建
+
+### 审核流程（版主）
+1. 切换到版主身份
+2. 进入「审核中心」
+3. 查看待审核的经验和评论
+4. 可以查看完整内容，包括敏感标记
+5. 点击「通过」或「驳回」
+6. 驳回需填写理由，发送给原作者
+
+---
+
+## ⚠️ 免责声明
+
+本平台（以下简称"本平台"）为病友自发经验交流社区，所有内容均为用户个人分享，不代表本平台立场。
+
+**特别提醒：**
+1. 本平台所有内容仅供经验交流，不构成任何医疗建议
+2. 不要根据网络内容自行调整用药方案，请务必遵循医嘱
+3. 如遇紧急情况，请立即前往正规医疗机构就诊
+4. 本平台不对任何因使用本站内容而产生的后果负责
+
+---
+
+## 🎨 设计理念
+
+- **温暖人文**：使用霞鹜文楷字体，蓝绿色系主色调，营造温馨有爱的社区氛围
+- **清晰边界**：普通用户和版主界面有明确区分，避免权限混淆
+- **隐私保护**：严格的敏感内容审核机制，保护用户隐私安全
+- **尊重原创**：入门指南保留每篇经验的原作者署名，鼓励优质创作
+
+---
+
+## 📄 License
+
+MIT License

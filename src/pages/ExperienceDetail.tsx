@@ -1,26 +1,53 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { 
   ArrowLeft, Heart, MessageCircle, Eye, Share2, Bookmark,
-  MapPin, Pill, Activity, Calendar, User, Clock
+  MapPin, Pill, Activity, Calendar, User, Clock, BookOpen, Plus, Check
 } from 'lucide-react';
 import { useContentStore } from '@/store/useContentStore';
 import { getStageColor } from '@/utils/categoryMap';
 import { Disclaimer } from '@/components/Disclaimer';
 import { CommentSection } from '@/components/CommentSection';
+import { Modal } from '@/components/Modal';
 
 export default function ExperienceDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const [showAddToGuideModal, setShowAddToGuideModal] = useState(false);
+  const [selectedGuideId, setSelectedGuideId] = useState<string | null>(null);
+  const [showSuccessToast, setShowSuccessToast] = useState(false);
   
   const experiences = useContentStore(state => state.experiences);
   const users = useContentStore(state => state.users);
+  const guides = useContentStore(state => state.guides);
   const currentUser = useContentStore(state => state.currentUser);
   const toggleLike = useContentStore(state => state.toggleLike);
   const incrementView = useContentStore(state => state.incrementView);
+  const addExperienceToGuide = useContentStore(state => state.addExperienceToGuide);
 
   const experience = useMemo(() => id ? experiences.find(e => e.id === id) : undefined, [id, experiences]);
   const author = useMemo(() => experience ? users.find(u => u.id === experience.userId) : undefined, [experience, users]);
+  
+  const isInAnyGuide = useMemo(() => {
+    if (!experience) return false;
+    return guides.some(g => g.entries.some(e => e.experienceId === experience.id));
+  }, [experience, guides]);
+  
+  const availableGuides = useMemo(() => {
+    if (!experience) return [];
+    return guides.filter(g => !g.entries.some(e => e.experienceId === experience.id));
+  }, [experience, guides]);
+
+  const handleAddToGuide = () => {
+    if (!experience || !selectedGuideId) return;
+    
+    addExperienceToGuide(selectedGuideId, experience.id, experience.title);
+    setShowAddToGuideModal(false);
+    setSelectedGuideId(null);
+    setShowSuccessToast(true);
+    
+    setTimeout(() => setShowSuccessToast(false), 3000);
+  };
 
   useEffect(() => {
     if (id && experience) {
@@ -173,6 +200,22 @@ export default function ExperienceDetail() {
                 </div>
               </div>
               <div className="flex items-center gap-2">
+                {currentUser.role === 'moderator' && experience.status === 'published' && (
+                  isInAnyGuide ? (
+                    <div className="flex items-center gap-1.5 px-3 py-2 bg-green-50 text-green-600 rounded-xl text-sm font-medium">
+                      <Check className="w-4 h-4" />
+                      <span>已收录</span>
+                    </div>
+                  ) : (
+                    <button
+                      onClick={() => setShowAddToGuideModal(true)}
+                      className="flex items-center gap-1.5 px-3 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl text-sm font-medium hover:from-purple-600 hover:to-pink-600 transition-all"
+                    >
+                      <BookOpen className="w-4 h-4" />
+                      <span>加入指南</span>
+                    </button>
+                  )
+                )}
                 <button className="p-2 text-gray-500 hover:text-teal-600 hover:bg-teal-50 rounded-xl transition-colors">
                   <Bookmark className="w-5 h-5" />
                 </button>
@@ -226,6 +269,82 @@ export default function ExperienceDetail() {
           </Link>
         </div>
       </div>
+
+      {showSuccessToast && (
+        <div className="fixed top-24 right-4 z-50 animate-[fadeInRight_0.3s_ease-out]">
+          <div className="bg-green-600 text-white px-4 py-3 rounded-xl shadow-lg flex items-center gap-2">
+            <Check className="w-5 h-5" />
+            <span className="font-medium">已成功加入指南</span>
+          </div>
+        </div>
+      )}
+
+      <Modal
+        isOpen={showAddToGuideModal}
+        onClose={() => {
+          setShowAddToGuideModal(false);
+          setSelectedGuideId(null);
+        }}
+        title="选择要加入的指南"
+        type="default"
+        onConfirm={handleAddToGuide}
+        confirmText="加入指南"
+        onCancel={() => {
+          setShowAddToGuideModal(false);
+          setSelectedGuideId(null);
+        }}
+        cancelText="取消"
+        confirmDisabled={!selectedGuideId}
+      >
+        {availableGuides.length === 0 ? (
+          <div className="text-center py-8">
+            <BookOpen className="w-12 h-12 mx-auto mb-3 text-gray-300" />
+            <p className="text-gray-600 mb-2">暂无可加入的指南</p>
+            <button
+              onClick={() => {
+                setShowAddToGuideModal(false);
+                navigate('/guides/create');
+              }}
+              className="text-purple-600 font-medium hover:text-purple-700 transition-colors flex items-center gap-1 mx-auto"
+            >
+              <Plus className="w-4 h-4" />
+              创建新指南
+            </button>
+          </div>
+        ) : (
+          <div className="space-y-3 max-h-80 overflow-y-auto">
+            {availableGuides.map((guide) => (
+              <div
+                key={guide.id}
+                onClick={() => setSelectedGuideId(guide.id)}
+                className={`p-4 rounded-xl border-2 cursor-pointer transition-all ${
+                  selectedGuideId === guide.id
+                    ? 'border-purple-500 bg-purple-50'
+                    : 'border-gray-100 bg-gray-50 hover:bg-gray-100'
+                }`}
+              >
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <BookOpen className="w-5 h-5 text-white" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h4 className="font-medium text-gray-800 mb-1">{guide.title}</h4>
+                    <p className="text-sm text-gray-500 line-clamp-2">{guide.description}</p>
+                    <p className="text-xs text-gray-400 mt-2">
+                      已收录 {guide.entries.length} 篇经验
+                    </p>
+                  </div>
+                  {selectedGuideId === guide.id && (
+                    <div className="w-6 h-6 bg-purple-500 rounded-full flex items-center justify-center flex-shrink-0">
+                      <Check className="w-4 h-4 text-white" />
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </Modal>
 
       <footer className="mt-16 py-8 bg-white border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-4 text-center">

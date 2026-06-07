@@ -4,6 +4,7 @@ import Publish from "@/pages/Publish";
 import ExperienceDetail from "@/pages/ExperienceDetail";
 import Guides from "@/pages/Guides";
 import GuideDetail from "@/pages/GuideDetail";
+import CreateGuide from "@/pages/CreateGuide";
 import ReviewCenter from "@/pages/ReviewCenter";
 import { Navbar } from "@/components/Navbar";
 
@@ -19,6 +20,7 @@ function AppContent() {
         <Route path="/publish" element={<Publish />} />
         <Route path="/experience/:id" element={<ExperienceDetail />} />
         <Route path="/guides" element={<Guides />} />
+        <Route path="/guides/create" element={<CreateGuide />} />
         <Route path="/guides/:id" element={<GuideDetail />} />
         <Route path="/review" element={<ReviewCenter />} />
         <Route path="*" element={<Home />} />

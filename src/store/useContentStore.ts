@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { Experience, Guide, Comment, User, FilterState } from '@/types';
+import type { Experience, Guide, Comment, User, FilterState, GuideEntry } from '@/types';
 import experiencesData from '@/data/experiences.json';
 import guidesData from '@/data/guides.json';
 import commentsData from '@/data/comments.json';
@@ -14,6 +14,7 @@ interface ContentState {
   currentUser: User;
   filters: FilterState;
   setFilters: (filters: FilterState) => void;
+  switchUser: (userId: string) => void;
   getFilteredExperiences: () => Experience[];
   getPublishedExperiences: () => Experience[];
   getPendingExperiences: () => Experience[];
@@ -27,6 +28,9 @@ interface ContentState {
   rejectExperience: (id: string) => void;
   toggleLike: (id: string) => void;
   incrementView: (id: string) => void;
+  createGuide: (guide: Omit<Guide, 'id' | 'createdAt' | 'views'>) => Guide;
+  addExperienceToGuide: (guideId: string, experienceId: string, sectionTitle: string) => void;
+  removeExperienceFromGuide: (guideId: string, entryId: string) => void;
 }
 
 export const useContentStore = create<ContentState>((set, get) => ({
@@ -34,7 +38,7 @@ export const useContentStore = create<ContentState>((set, get) => ({
   guides: guidesData as Guide[],
   comments: commentsData as Comment[],
   users: usersData as User[],
-  currentUser: usersData[2] as User,
+  currentUser: usersData[0] as User,
   filters: {
     diseaseStage: [],
     medicationExperience: [],
@@ -42,6 +46,13 @@ export const useContentStore = create<ContentState>((set, get) => ({
   },
 
   setFilters: (filters) => set({ filters }),
+
+  switchUser: (userId) => {
+    const user = get().users.find(u => u.id === userId);
+    if (user) {
+      set({ currentUser: user });
+    }
+  },
 
   getFilteredExperiences: () => {
     const { experiences, filters } = get();
@@ -97,7 +108,7 @@ export const useContentStore = create<ContentState>((set, get) => ({
 
   addExperience: (experienceData) => {
     const { currentUser } = get();
-    const sensitiveResult = checkSensitiveContent(experienceData.content);
+    const sensitiveResult = checkSensitiveContent(experienceData.content, experienceData.title);
     
     const newExperience: Experience = {
       ...experienceData,
@@ -174,6 +185,54 @@ export const useContentStore = create<ContentState>((set, get) => ({
     set(state => ({
       experiences: state.experiences.map(e =>
         e.id === id ? { ...e, views: e.views + 1 } : e
+      )
+    }));
+  },
+
+  createGuide: (guideData) => {
+    const { currentUser } = get();
+    const newGuide: Guide = {
+      ...guideData,
+      id: `g${Date.now()}`,
+      createdAt: new Date().toISOString(),
+      views: 0
+    };
+
+    set(state => ({
+      guides: [...state.guides, newGuide]
+    }));
+
+    return newGuide;
+  },
+
+  addExperienceToGuide: (guideId, experienceId, sectionTitle) => {
+    set(state => {
+      const guide = state.guides.find(g => g.id === guideId);
+      if (!guide) return state;
+
+      const newEntry: GuideEntry = {
+        id: `ge${Date.now()}`,
+        experienceId,
+        orderIndex: guide.entries.length,
+        sectionTitle
+      };
+
+      return {
+        guides: state.guides.map(g =>
+          g.id === guideId
+            ? { ...g, entries: [...g.entries, newEntry] }
+            : g
+        )
+      };
+    });
+  },
+
+  removeExperienceFromGuide: (guideId, entryId) => {
+    set(state => ({
+      guides: state.guides.map(g =>
+        g.id === guideId
+          ? { ...g, entries: g.entries.filter(e => e.id !== entryId) }
+          : g
       )
     }));
   }
