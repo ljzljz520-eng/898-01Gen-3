@@ -1,0 +1,44 @@
+[
+  {
+    "id": "u1",
+    "nickname": "阳光向日葵",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=sunflower",
+    "role": "user",
+    "city": "北京"
+  },
+  {
+    "id": "u2",
+    "nickname": "小雨点",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=raindrop",
+    "role": "user",
+    "city": "上海"
+  },
+  {
+    "id": "u3",
+    "nickname": "健康达人",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=health",
+    "role": "moderator",
+    "city": "广州"
+  },
+  {
+    "id": "u4",
+    "nickname": "勇敢的心",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=brave",
+    "role": "user",
+    "city": "成都"
+  },
+  {
+    "id": "u5",
+    "nickname": "清风徐来",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=breeze",
+    "role": "moderator",
+    "city": "杭州"
+  },
+  {
+    "id": "u6",
+    "nickname": "春暖花开",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=spring",
+    "role": "user",
+    "city": "深圳"
+  }
+]

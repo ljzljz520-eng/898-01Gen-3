@@ -1,0 +1,77 @@
+[
+  {
+    "id": "g1",
+    "title": "新手指南：从初诊到治疗的完整 roadmap",
+    "description": "专为刚确诊的病友准备，从心理调适到就医流程，帮你走好第一步。",
+    "coverImage": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=warm%20and%20hopeful%20medical%20guide%20cover%20with%20soothing%20colors%20and%20gentle%20design&image_size=landscape_16_9",
+    "curatorId": "u3",
+    "entries": [
+      {
+        "id": "ge1",
+        "experienceId": "e1",
+        "orderIndex": 1,
+        "sectionTitle": "第一章：初诊后的心理调适"
+      },
+      {
+        "id": "ge2",
+        "experienceId": "e2",
+        "orderIndex": 2,
+        "sectionTitle": "第二章：治疗期间的实用生活技巧"
+      }
+    ],
+    "createdAt": "2024-03-01T10:00:00Z",
+    "views": 12340
+  },
+  {
+    "id": "g2",
+    "title": "康复期完全手册：回归正常生活的科学方法",
+    "description": "治疗结束不是终点，如何科学地恢复体力、重建信心，回归正常生活。",
+    "coverImage": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=recovery%20and%20healing%20guide%20cover%20with%20nature%20elements%20and%20calm%20atmosphere&image_size=landscape_16_9",
+    "curatorId": "u5",
+    "entries": [
+      {
+        "id": "ge3",
+        "experienceId": "e3",
+        "orderIndex": 1,
+        "sectionTitle": "第一章：康复期运动指南"
+      },
+      {
+        "id": "ge4",
+        "experienceId": "e7",
+        "orderIndex": 2,
+        "sectionTitle": "第二章：情绪管理与心理健康"
+      }
+    ],
+    "createdAt": "2024-04-01T14:00:00Z",
+    "views": 8920
+  },
+  {
+    "id": "g3",
+    "title": "全国主要城市就医指南",
+    "description": "整理了北京、上海、广州、深圳等城市的就医经验，包含预约技巧、医院选择等实用信息。",
+    "coverImage": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=city%20medical%20guide%20map%20illustration%20with%20hospital%20icons%20and%20friendly%20design&image_size=landscape_16_9",
+    "curatorId": "u3",
+    "entries": [
+      {
+        "id": "ge5",
+        "experienceId": "e1",
+        "orderIndex": 1,
+        "sectionTitle": "北京就医经验"
+      },
+      {
+        "id": "ge6",
+        "experienceId": "e2",
+        "orderIndex": 2,
+        "sectionTitle": "上海就医经验"
+      },
+      {
+        "id": "ge7",
+        "experienceId": "e4",
+        "orderIndex": 3,
+        "sectionTitle": "深圳就医经验"
+      }
+    ],
+    "createdAt": "2024-04-15T09:00:00Z",
+    "views": 15680
+  }
+]

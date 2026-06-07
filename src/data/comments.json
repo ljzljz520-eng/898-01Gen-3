@@ -1,0 +1,66 @@
+[
+  {
+    "id": "c1",
+    "experienceId": "e1",
+    "userId": "u2",
+    "content": "太有共鸣了！我刚确诊的时候也是每天失眠，感觉天都塌了。后来慢慢调整心态，现在已经接受了这个事实。一起加油！",
+    "status": "published",
+    "createdAt": "2024-01-16T09:20:00Z"
+  },
+  {
+    "id": "c2",
+    "experienceId": "e1",
+    "userId": "u4",
+    "content": "非常赞同找正规医院。我当初走了不少弯路，花了很多冤枉钱，最后还是回到正规治疗。大家一定要相信科学！",
+    "status": "published",
+    "createdAt": "2024-01-16T14:35:00Z"
+  },
+  {
+    "id": "c3",
+    "experienceId": "e2",
+    "userId": "u1",
+    "content": "这个用药提醒的方法太好了！我经常忘记吃药，今天就去设置闹钟。感谢分享这么实用的技巧。",
+    "status": "published",
+    "createdAt": "2024-02-21T11:10:00Z"
+  },
+  {
+    "id": "c4",
+    "experienceId": "e2",
+    "userId": "u6",
+    "content": "饮食日记我也在写，确实对复诊很有帮助。医生能通过日记看出很多问题。坚持！",
+    "status": "published",
+    "createdAt": "2024-02-22T08:45:00Z"
+  },
+  {
+    "id": "c5",
+    "experienceId": "e3",
+    "userId": "u2",
+    "content": "我现在也是每天散步，真的感觉精神好多了。不过不敢走太远，15分钟左右就回家休息。",
+    "status": "published",
+    "createdAt": "2024-03-11T16:20:00Z"
+  },
+  {
+    "id": "c6",
+    "experienceId": "e3",
+    "userId": "u1",
+    "content": "请问你是治疗结束多久开始游泳的？我也想学，但是担心水太凉对身体不好。",
+    "status": "published",
+    "createdAt": "2024-03-12T10:05:00Z"
+  },
+  {
+    "id": "c7",
+    "experienceId": "e7",
+    "userId": "u6",
+    "content": "哭了...这段时间情绪特别差，看完这篇感觉被理解了。谢谢你的分享，真的很温暖。",
+    "status": "published",
+    "createdAt": "2024-04-13T15:30:00Z"
+  },
+  {
+    "id": "c8",
+    "experienceId": "e7",
+    "userId": "u2",
+    "content": "接纳自己的情绪这一点太重要了。我之前总怪自己为什么这么脆弱，后来才明白这是正常的反应。",
+    "status": "published",
+    "createdAt": "2024-04-14T09:15:00Z"
+  }
+]
